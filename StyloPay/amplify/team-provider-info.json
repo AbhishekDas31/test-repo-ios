@@ -1,0 +1,15 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-stylopaynew-dev-175414-authRole",
+      "UnauthRoleArn": "arn:aws:iam::738965716156:role/amplify-stylopaynew-dev-175414-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::738965716156:role/amplify-stylopaynew-dev-175414-authRole",
+      "Region": "eu-west-1",
+      "DeploymentBucketName": "amplify-stylopaynew-dev-175414-deployment",
+      "UnauthRoleName": "amplify-stylopaynew-dev-175414-unauthRole",
+      "StackName": "amplify-stylopaynew-dev-175414",
+      "StackId": "arn:aws:cloudformation:eu-west-1:738965716156:stack/amplify-stylopaynew-dev-175414/b2f55e30-8bd2-11eb-af5b-0a25630f3e59",
+      "AmplifyAppId": "d2uykg1bh7ol4m"
+    }
+  }
+}

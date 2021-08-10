@@ -1,0 +1,25 @@
+# Uncomment the next line to define a global platform for your project
+# platform :ios, '9.0'
+
+target 'StyloPay' do
+  # Comment the next line if you don't want to use dynamic frameworks
+  use_frameworks!
+pod 'Firebase/Crashlytics'
+  pod 'SwiftLint'
+  pod 'MFSideMenu'
+  pod 'Alamofire'
+  pod 'MBProgressHUD'
+  pod 'SDWebImage'
+  pod 'JsonSwiftson'
+  pod ‘ReachabilitySwift’
+  pod ‘IQKeyboardManagerSwift’
+  pod 'Amplify'
+  pod 'AmplifyPlugins/AWSCognitoAuthPlugin'
+  pod 'ActionSheetPicker-3.0'
+  pod 'DropDown'
+  pod 'CenteredCollectionView'
+  #pod 'Amplify/Tools'
+
+  # Pods for StyloPay
+
+end

@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="Barlow-Regular.ttf">
+            <string>Barlow-Regular</string>
+        </array>
+        <array key="Barlow-SemiBold.ttf">
+            <string>Barlow-SemiBold</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="RecentTransactionTableViewCell" rowHeight="350" id="KGk-i7-Jjw" customClass="RecentTransactionTableViewCell" customModule="StyloPay" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="261" height="350"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="261" height="350"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Aig-rz-3iU">
+                        <rect key="frame" x="0.0" y="0.0" width="261" height="348"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NMn-CQ-Ex2">
+                                <rect key="frame" x="20" y="15" width="91.5" height="294"/>
+                                <mutableString key="text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. </mutableString>
+                                <fontDescription key="fontDescription" name="Barlow-SemiBold" family="Barlow" pointSize="15"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ORDER ID 6788768" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="avA-A6-mkU">
+                                <rect key="frame" x="119.5" y="15" width="131.5" height="18"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="18" id="PIW-G0-Urn"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Barlow-Regular" family="Barlow" pointSize="13"/>
+                                <color key="textColor" red="0.56709825989999996" green="0.60399705169999995" blue="0.62778168919999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$40" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="17b-d6-Eyz">
+                                <rect key="frame" x="119.5" y="38" width="99.5" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="3hz-19-H1v"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Barlow-Regular" family="Barlow" pointSize="17"/>
+                                <color key="textColor" red="0.40783309940000001" green="0.45056670900000001" blue="0.4710745811" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Og-Ck-5Tg">
+                                <rect key="frame" x="20" y="319" width="31" height="16"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="16" id="JaU-n2-2lh"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Barlow-Regular" family="Barlow" pointSize="13"/>
+                                <color key="textColor" red="0.56276923420000002" green="0.59556931260000001" blue="0.60920566320000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="excamalation_icon" translatesAutoresizingMaskIntoConstraints="NO" id="KsA-7w-Tty">
+                                <rect key="frame" x="231" y="38" width="20" height="20"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="20" id="M0J-6j-V05"/>
+                                    <constraint firstAttribute="width" secondItem="KsA-7w-Tty" secondAttribute="height" multiplier="1:1" id="rlH-zD-UAf"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="NMn-CQ-Ex2" firstAttribute="width" secondItem="Aig-rz-3iU" secondAttribute="width" multiplier="0.35" id="5Ld-Gg-vmb"/>
+                            <constraint firstItem="NMn-CQ-Ex2" firstAttribute="top" secondItem="Aig-rz-3iU" secondAttribute="top" constant="15" id="6oM-9d-sAf"/>
+                            <constraint firstItem="KsA-7w-Tty" firstAttribute="leading" secondItem="17b-d6-Eyz" secondAttribute="trailing" constant="12" id="8uq-1w-jPo"/>
+                            <constraint firstItem="NMn-CQ-Ex2" firstAttribute="leading" secondItem="Aig-rz-3iU" secondAttribute="leading" constant="20" symbolic="YES" id="JfW-ML-3TN"/>
+                            <constraint firstItem="4Og-Ck-5Tg" firstAttribute="top" secondItem="NMn-CQ-Ex2" secondAttribute="bottom" constant="10" id="PX2-Km-GgA"/>
+                            <constraint firstItem="KsA-7w-Tty" firstAttribute="trailing" secondItem="avA-A6-mkU" secondAttribute="trailing" id="PiU-yl-av5"/>
+                            <constraint firstItem="17b-d6-Eyz" firstAttribute="leading" secondItem="avA-A6-mkU" secondAttribute="leading" id="QVJ-V8-u0W"/>
+                            <constraint firstItem="17b-d6-Eyz" firstAttribute="top" secondItem="avA-A6-mkU" secondAttribute="bottom" constant="5" id="ba6-ej-BGT"/>
+                            <constraint firstItem="avA-A6-mkU" firstAttribute="leading" secondItem="NMn-CQ-Ex2" secondAttribute="trailing" constant="8" id="fnL-ay-Ata"/>
+                            <constraint firstAttribute="trailing" secondItem="avA-A6-mkU" secondAttribute="trailing" constant="10" id="mus-3k-PLC"/>
+                            <constraint firstItem="KsA-7w-Tty" firstAttribute="top" secondItem="17b-d6-Eyz" secondAttribute="top" id="pnA-gp-wN6"/>
+                            <constraint firstItem="4Og-Ck-5Tg" firstAttribute="leading" secondItem="NMn-CQ-Ex2" secondAttribute="leading" id="qpE-qF-BzP"/>
+                            <constraint firstAttribute="bottom" secondItem="4Og-Ck-5Tg" secondAttribute="bottom" constant="13" id="qrc-Kz-2E3"/>
+                            <constraint firstItem="avA-A6-mkU" firstAttribute="top" secondItem="Aig-rz-3iU" secondAttribute="top" constant="15" id="vKG-yS-hQ2"/>
+                        </constraints>
+                    </view>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hfM-ML-oPB">
+                        <rect key="frame" x="0.0" y="349" width="261" height="1"/>
+                        <color key="backgroundColor" red="0.94230735300000001" green="0.94876450300000004" blue="0.94865149260000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="1" id="ATC-wI-WhF"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                <constraints>
+                    <constraint firstItem="Aig-rz-3iU" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="W5y-t9-RUO"/>
+                    <constraint firstItem="hfM-ML-oPB" firstAttribute="trailing" secondItem="Aig-rz-3iU" secondAttribute="trailing" id="eKH-H8-IKS"/>
+                    <constraint firstItem="Aig-rz-3iU" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="kW6-Kf-2Om"/>
+                    <constraint firstItem="hfM-ML-oPB" firstAttribute="top" secondItem="Aig-rz-3iU" secondAttribute="bottom" constant="1" id="kwl-yB-app"/>
+                    <constraint firstAttribute="trailing" secondItem="Aig-rz-3iU" secondAttribute="trailing" id="sNv-BI-Ayb"/>
+                    <constraint firstItem="hfM-ML-oPB" firstAttribute="leading" secondItem="Aig-rz-3iU" secondAttribute="leading" id="voM-sw-Y0D"/>
+                    <constraint firstAttribute="bottom" secondItem="hfM-ML-oPB" secondAttribute="bottom" id="zQd-uQ-a7Q"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <connections>
+                <outlet property="dateTimeLabel" destination="4Og-Ck-5Tg" id="X0H-DL-sDD"/>
+                <outlet property="iconImage" destination="KsA-7w-Tty" id="ca3-RD-Ef8"/>
+                <outlet property="mainView" destination="Aig-rz-3iU" id="dns-X9-hOR"/>
+                <outlet property="orderIDLabel" destination="avA-A6-mkU" id="G4s-W0-m1W"/>
+                <outlet property="seperatorView" destination="hfM-ML-oPB" id="0aF-3b-xMw"/>
+                <outlet property="titleLabel" destination="NMn-CQ-Ex2" id="dmE-Mc-nHM"/>
+                <outlet property="transactionAmountLabel" destination="17b-d6-Eyz" id="Ba3-sF-Iwg"/>
+            </connections>
+            <point key="canvasLocation" x="174.63768115942031" y="167.41071428571428"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="excamalation_icon" width="25" height="25"/>
+    </resources>
+</document>

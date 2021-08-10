@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "cocos-island.svg",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

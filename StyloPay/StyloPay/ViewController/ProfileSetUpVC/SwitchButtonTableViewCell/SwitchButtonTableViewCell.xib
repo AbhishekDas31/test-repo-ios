@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="Barlow-Regular.ttf">
+            <string>Barlow-Regular</string>
+        </array>
+        <array key="Barlow-SemiBold.ttf">
+            <string>Barlow-SemiBold</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="SwitchButtonTableViewCell" rowHeight="131" id="KGk-i7-Jjw" customClass="SwitchButtonTableViewCell" customModule="StyloPay" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="377" height="131"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="377" height="131"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0Xc-DP-U9Q">
+                        <rect key="frame" x="25" y="10" width="327" height="70"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="P61-ZC-Ery">
+                                <rect key="frame" x="101" y="5" width="125" height="30"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DXU-2y-xXW">
+                                        <rect key="frame" x="0.0" y="5" width="20" height="20"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="20" id="oY4-ZO-Uix"/>
+                                            <constraint firstAttribute="height" constant="20" id="xg6-Em-MXR"/>
+                                        </constraints>
+                                        <connections>
+                                            <action selector="checkboxButtonPressed:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="tjq-Bz-qSp"/>
+                                        </connections>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="I ACCEPT ALL" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hdb-a3-g9W">
+                                        <rect key="frame" x="25" y="5" width="90" height="20"/>
+                                        <fontDescription key="fontDescription" name="Barlow-Regular" family="Barlow" pointSize="15"/>
+                                        <color key="textColor" red="0.1176327839" green="0.1176561788" blue="0.117627643" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="hdb-a3-g9W" secondAttribute="trailing" constant="10" id="1NM-hS-mVj"/>
+                                    <constraint firstAttribute="bottom" secondItem="hdb-a3-g9W" secondAttribute="bottom" constant="5" id="5IG-Go-OAH"/>
+                                    <constraint firstAttribute="height" constant="30" id="Lu5-d5-17g"/>
+                                    <constraint firstItem="hdb-a3-g9W" firstAttribute="top" secondItem="P61-ZC-Ery" secondAttribute="top" constant="5" id="OwS-71-nHB"/>
+                                    <constraint firstItem="hdb-a3-g9W" firstAttribute="leading" secondItem="DXU-2y-xXW" secondAttribute="trailing" constant="5" id="UfN-T0-OeF"/>
+                                    <constraint firstItem="DXU-2y-xXW" firstAttribute="leading" secondItem="P61-ZC-Ery" secondAttribute="leading" id="nF1-CY-Kac"/>
+                                    <constraint firstItem="DXU-2y-xXW" firstAttribute="centerY" secondItem="P61-ZC-Ery" secondAttribute="centerY" id="rWP-bd-SFD"/>
+                                </constraints>
+                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TERMS &amp; CONDITIONS" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hr0-hh-KKj">
+                                <rect key="frame" x="91" y="40" width="145.5" height="25"/>
+                                <fontDescription key="fontDescription" name="Barlow-SemiBold" family="Barlow" pointSize="15"/>
+                                <color key="textColor" red="0.75139033789999998" green="0.2052968144" blue="0.45834958549999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="P61-ZC-Ery" firstAttribute="centerX" secondItem="0Xc-DP-U9Q" secondAttribute="centerX" id="2cl-TC-aFz"/>
+                            <constraint firstItem="P61-ZC-Ery" firstAttribute="top" secondItem="0Xc-DP-U9Q" secondAttribute="top" constant="5" id="PAA-E6-XK7"/>
+                            <constraint firstAttribute="height" constant="70" id="cpU-v4-sEb"/>
+                            <constraint firstAttribute="bottom" secondItem="hr0-hh-KKj" secondAttribute="bottom" constant="5" id="ooK-Yj-xRh"/>
+                            <constraint firstItem="hr0-hh-KKj" firstAttribute="top" secondItem="P61-ZC-Ery" secondAttribute="bottom" constant="5" id="vLT-0s-Yh9"/>
+                            <constraint firstItem="hr0-hh-KKj" firstAttribute="centerX" secondItem="0Xc-DP-U9Q" secondAttribute="centerX" id="w0o-by-Cd4"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="0Xc-DP-U9Q" secondAttribute="trailing" constant="25" id="GCc-fm-pcX"/>
+                    <constraint firstAttribute="bottom" secondItem="0Xc-DP-U9Q" secondAttribute="bottom" id="ekM-zt-sbH"/>
+                    <constraint firstItem="0Xc-DP-U9Q" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="25" id="gxT-f0-Y32"/>
+                    <constraint firstItem="0Xc-DP-U9Q" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="l5p-MF-I1B"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <connections>
+                <outlet property="checkBoxButton" destination="DXU-2y-xXW" id="aYN-iq-4qO"/>
+                <outlet property="mainView" destination="0Xc-DP-U9Q" id="6xe-lK-fCT"/>
+                <outlet property="tncLabel" destination="hr0-hh-KKj" id="Qpr-Gg-mNZ"/>
+            </connections>
+            <point key="canvasLocation" x="277.536231884058" y="139.62053571428569"/>
+        </tableViewCell>
+    </objects>
+</document>

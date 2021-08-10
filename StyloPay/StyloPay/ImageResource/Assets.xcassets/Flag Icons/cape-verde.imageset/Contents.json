@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "cape-verde.svg",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

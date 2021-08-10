@@ -1,0 +1,6 @@
+framework module JsonSwiftson {
+  umbrella header "JsonSwiftson-umbrella.h"
+
+  export *
+  module * { export * }
+}
