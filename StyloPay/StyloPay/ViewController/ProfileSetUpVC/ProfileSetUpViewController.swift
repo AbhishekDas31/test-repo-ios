@@ -109,7 +109,7 @@ class ProfileSetUpViewController: UIViewController {
         profileTableView.sectionFooterHeight = 56
         profileTableView.rowHeight = UITableView.automaticDimension
         profileTableView.register(UINib(nibName: "PersonalInfoTableViewCell", bundle: nil), forCellReuseIdentifier: "PersonalInfoTableViewCell")
-        profileTableView.register(UINib(nibName: "AddressDetailsTableViewCell", bundle: nil), forCellReuseIdentifier: "AddressDetailsTableViewCell")
+        profileTableView.register(UINib(nibName: "AddressSetUpTableViewCell", bundle: nil), forCellReuseIdentifier: "AddressSetUpTableViewCell")
         profileTableView.register(UINib(nibName: "SwitchButtonTableViewCell", bundle: nil), forCellReuseIdentifier: "SwitchButtonTableViewCell")
         profileTableView.register(UINib(nibName: "RemittanceAddressDetailTableViewCell", bundle: nil), forCellReuseIdentifier: "RemittanceAddressDetailTableViewCell")
         self.navigationController?.navigationBar.isHidden = true
@@ -191,22 +191,21 @@ extension ProfileSetUpViewController: UITableViewDelegate, UITableViewDataSource
                 return profileInfoCell
             }
         } else if indexPath.row == 1 {
-            if let addressDetailsCell =  tableView.dequeueReusableCell(withIdentifier: "AddressDetailsTableViewCell", for: indexPath) as? AddressDetailsTableViewCell{
+            if let addressDetailsCell =  tableView.dequeueReusableCell(withIdentifier: "AddressSetUpTableViewCell", for: indexPath) as? AddressSetUpTableViewCell{
                 if isRFIRequest {
                     if self.rfiData.rfiDescription.isEmpty || self.rfiData.rfiDescription == "address"{
                         self.rfiData.rfiDescription = "all"
                     }
-                    addressDetailsCell.configureRFITextFields(row: indexPath.row, data: self.personalInfo, description: self.rfiData.rfiDescription, remark: self.rfiData.remarks)
-                } else {
-                    addressDetailsCell.configureTextFields(row: indexPath.row, data: personalInfo, isTextfieldEditable: true)
+//                    addressDetailsCell.configureRFITextFields(row: indexPath.row, data: self.personalInfo, description: self.rfiData.rfiDescription, remark: self.rfiData.remarks)
+                } else {                   addressDetailsCell.configureTextFields(row: indexPath.row, data: personalInfo, isTextfieldEditable: true)
                 }
                 
-                addressDetailsCell.landmarkTextField.delegate = self
-                addressDetailsCell.firstAddressLineTextField.delegate = self
-                addressDetailsCell.secondAddressLineTextField.delegate = self
+                addressDetailsCell.countryTextField.delegate = self
+                addressDetailsCell.addressLine1TextField.delegate = self
+                addressDetailsCell.addressLine2TextField.delegate = self
                 addressDetailsCell.cityTextField.delegate = self
-                addressDetailsCell.statesTextField.delegate = self
-                addressDetailsCell.zipcodeTextField.delegate = self
+                addressDetailsCell.stateTextField.delegate = self
+                addressDetailsCell.pinCodeTextField.delegate = self
                 if !self.isRFIRequest {
                     addressDetailsCell.countryButton.addTarget(self, action: #selector(nationalityTap), for: .touchUpInside)
                 }
@@ -433,8 +432,8 @@ extension ProfileSetUpViewController: ProfileSwitchActionDelegate,PermanentAddre
     
     func tabCountryCode(country: String, row: Int) {
         let indexPathh = IndexPath(row: 1, section: 0)
-        if let cell:AddressDetailsTableViewCell = profileTableView.cellForRow(at: indexPathh) as? AddressDetailsTableViewCell{
-            cell.firstAddressLineTextField.text = "\(country)"
+        if let cell:AddressSetUpTableViewCell = profileTableView.cellForRow(at: indexPathh) as? AddressSetUpTableViewCell{
+            cell.countryTextField.text = "\(country)"
             CustomUserDefaults.setCountry(data: "\(country)")
             self.personalInfo.nationality = "\(isoCode2[row])"
             self.personalInfo.country = "\(isoCode2[row])"
@@ -472,10 +471,12 @@ extension ProfileSetUpViewController {
             self.walletUsername = "\(emailAddress)"
         }
         //in username will be same as walletusername//
-        var parameters : [String : Any] = [ "agent_code": "\(agentCode)","sub_agent_code": "\(subAgentCode)","client_agent_subAgent_name" : "\(clientAgentSubagentName)" ,"username": "\(self.walletUsername)", "firstName": "\(personalInfo.firstName)","lastName": "\(personalInfo.lastName)", "preferredName": "\(personalInfo.preferredName)", "dateOfBirth": "\(personalInfo.dateOfBirth)", "nationality": "\(personalInfo.nationality)", "countryCode": "\(personalInfo.nationality)", "country": "\(personalInfo.nationality)","email": "\(emailAddress)","mobile": "\(personalInfo.mobileNumber)", "deliveryAddress1": "\(personalInfo.deliveryAddress1)", "deliveryAddress2": "\(personalInfo.deliveryAddress2)", "deliveryCity": "\(personalInfo.deliveryCity)", "deliveryLandmark": "\(personalInfo.deliveryLandmark)", "deliveryState": "\(personalInfo.deliveryState)", "deliveryZipCode": "\(personalInfo.deliveryZipCode)", "billingAddress1": "\(personalInfo.billingAddress1)", "billingAddress2": "\(personalInfo.billingAddress2)", "billingCity": "\(personalInfo.billingCity)", "billingLandmark": "\(personalInfo.billingLandmark)", "billingState": "\(personalInfo.billingState)", "billingZipCode": "\(personalInfo.billingZipCode)", "correspondenceAddress1": "\(personalInfo.billingAddress1)", "correspondenceAddress2": "\(personalInfo.billingAddress2)", "correspondenceCity": "\(personalInfo.billingCity)", "correspondenceLandmark": "\(personalInfo.billingLandmark)", "correspondenceState": "\(personalInfo.billingState)", "correspondenceZipCode": "\(personalInfo.billingZipCode)", "address_line_1": "\(personalInfo.billingAddress1)", "address_line_2": "\(personalInfo.billingAddress2)", "preferred_currency": "SGD", "password": "\(password)", "city": "\(personalInfo.billingCity)", "phone_type": "M", "country_isd_code": "\(self.personalInfo.countryCode)"]
+        var parameters : [String : Any] = [ "agent_code": "\(agentCode)","sub_agent_code": "\(subAgentCode)","client_agent_subAgent_name" : "\(clientAgentSubagentName)" ,"username": "\(self.walletUsername)", "firstName": "\(personalInfo.firstName)","lastName": "\(personalInfo.lastName)", "preferredName": "\(personalInfo.preferredName)", "dateOfBirth": "\(personalInfo.dateOfBirth)", "nationality": "\(personalInfo.nationality)", "countryCode": "\(personalInfo.nationality)", "country": "\(personalInfo.nationality)","billingCountry":"\(personalInfo.nationality)","deliveryCountry":"\(personalInfo.nationality)" ,"email": "\(emailAddress)","mobile": "\(personalInfo.mobileNumber)", "deliveryAddress1": "\(personalInfo.deliveryAddress1)", "deliveryAddress2": "\(personalInfo.deliveryAddress2)", "deliveryCity": "\(personalInfo.deliveryCity)", "deliveryLandmark": "\(personalInfo.deliveryLandmark)", "deliveryState": "\(personalInfo.deliveryState)", "deliveryZipCode": "\(personalInfo.deliveryZipCode)", "billingAddress1": "\(personalInfo.billingAddress1)", "billingAddress2": "\(personalInfo.billingAddress2)", "billingCity": "\(personalInfo.billingCity)", "billingLandmark": "\(personalInfo.billingLandmark)", "billingState": "\(personalInfo.billingState)", "billingZipCode": "\(personalInfo.billingZipCode)", "correspondenceAddress1": "\(personalInfo.billingAddress1)", "correspondenceAddress2": "\(personalInfo.billingAddress2)", "correspondenceCity": "\(personalInfo.billingCity)", "correspondenceLandmark": "\(personalInfo.billingLandmark)", "correspondenceState": "\(personalInfo.billingState)", "correspondenceZipCode": "\(personalInfo.billingZipCode)", "address_line_1": "\(personalInfo.billingAddress1)", "address_line_2": "\(personalInfo.billingAddress2)", "preferred_currency": "SGD", "password": "\(password)", "city": "\(personalInfo.billingCity)", "phone_type": "M", "country_isd_code": "\(self.personalInfo.countryCode)"]
         //\(self.personalInfo.code)
+        debugPrint(parameters)
         if !personalInfo.middleName.isEmpty {
             parameters.updateValue("\(personalInfo.middleName)", forKey: "middleName")
+            
         }
         if complianceStatus == "REJECT" || complianceStatus == "ERROR"{
             parameters.updateValue(customerHashId, forKey: "customerHashId")

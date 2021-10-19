@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0D6A8B412705C7E900FB5A14 /* AddressSetUpTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0D6A8B402705C7E900FB5A14 /* AddressSetUpTableViewCell.xib */; };
+		0D6A8B432705DCD700FB5A14 /* AddressSetUpTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D6A8B422705DCD700FB5A14 /* AddressSetUpTableViewCell.swift */; };
+		0D6D8F0E271D91A60007E184 /* TimerUIApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D6D8F0D271D91A60007E184 /* TimerUIApplication.swift */; };
+		0D6D8F10271EC4250007E184 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D6D8F0F271EC4250007E184 /* main.swift */; };
+		0D7FC4D326E8D457002377B4 /* OtpVerifyPopUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D7FC4D226E8D457002377B4 /* OtpVerifyPopUpVC.swift */; };
+		0D803C8926FB6F01001F9CD0 /* UpdateMailingAddressVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D803C8826FB6F01001F9CD0 /* UpdateMailingAddressVC.swift */; };
 		5D068A0524ED3F3600E7E649 /* WebPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D068A0424ED3F3500E7E649 /* WebPageViewController.swift */; };
 		5D0C58AC25ADA05B00B9E92D /* ActivateCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D0C58AB25ADA05B00B9E92D /* ActivateCardViewController.swift */; };
 		5D2AD22D24D965C200C3392E /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D2AD22C24D965C200C3392E /* ProfileViewController.swift */; };
@@ -144,6 +150,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0D6A8B402705C7E900FB5A14 /* AddressSetUpTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddressSetUpTableViewCell.xib; sourceTree = "<group>"; };
+		0D6A8B422705DCD700FB5A14 /* AddressSetUpTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressSetUpTableViewCell.swift; sourceTree = "<group>"; };
+		0D6D8F0D271D91A60007E184 /* TimerUIApplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerUIApplication.swift; sourceTree = "<group>"; };
+		0D6D8F0F271EC4250007E184 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		0D7FC4D226E8D457002377B4 /* OtpVerifyPopUpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtpVerifyPopUpVC.swift; sourceTree = "<group>"; };
+		0D803C8826FB6F01001F9CD0 /* UpdateMailingAddressVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateMailingAddressVC.swift; sourceTree = "<group>"; };
 		5D068A0424ED3F3500E7E649 /* WebPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebPageViewController.swift; sourceTree = "<group>"; };
 		5D0C58AB25ADA05B00B9E92D /* ActivateCardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivateCardViewController.swift; sourceTree = "<group>"; };
 		5D2AD22C24D965C200C3392E /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
@@ -299,6 +311,40 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0D6A8B3D2705C6F600FB5A14 /* AddressSetUpTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				0D6A8B402705C7E900FB5A14 /* AddressSetUpTableViewCell.xib */,
+				0D6A8B422705DCD700FB5A14 /* AddressSetUpTableViewCell.swift */,
+			);
+			path = AddressSetUpTableViewCell;
+			sourceTree = "<group>";
+		};
+		0D6D8F0C271D91850007E184 /* TimerUIApplication */ = {
+			isa = PBXGroup;
+			children = (
+				0D6D8F0D271D91A60007E184 /* TimerUIApplication.swift */,
+				0D6D8F0F271EC4250007E184 /* main.swift */,
+			);
+			path = TimerUIApplication;
+			sourceTree = "<group>";
+		};
+		0D7FC4C726E8C92B002377B4 /* OtpVerifyPopUpVC */ = {
+			isa = PBXGroup;
+			children = (
+				0D7FC4D226E8D457002377B4 /* OtpVerifyPopUpVC.swift */,
+			);
+			path = OtpVerifyPopUpVC;
+			sourceTree = "<group>";
+		};
+		0D803C8726FB6CE3001F9CD0 /* UpdateMailingAddressVC */ = {
+			isa = PBXGroup;
+			children = (
+				0D803C8826FB6F01001F9CD0 /* UpdateMailingAddressVC.swift */,
+			);
+			path = UpdateMailingAddressVC;
+			sourceTree = "<group>";
+		};
 		5D068A0324ED3F3500E7E649 /* WebPageVC */ = {
 			isa = PBXGroup;
 			children = (
@@ -508,6 +554,7 @@
 		5D6D38802498E91D009B9B3A /* ProfileSetUpVC */ = {
 			isa = PBXGroup;
 			children = (
+				0D6A8B3D2705C6F600FB5A14 /* AddressSetUpTableViewCell */,
 				5DB231E0249CC1920063B1BF /* RemittanceAddressDetail */,
 				5D6D388F249A02A4009B9B3A /* SwitchButtonTableViewCell */,
 				5D6D3883249923E7009B9B3A /* AddressDetailTableviewCell */,
@@ -693,6 +740,7 @@
 		5DAEE601248F79CE00885FE4 /* GlobalClasses */ = {
 			isa = PBXGroup;
 			children = (
+				0D6D8F0C271D91850007E184 /* TimerUIApplication */,
 				5DB231DB249B6E250063B1BF /* WebServices */,
 				5D645C75249686B900739249 /* Alert */,
 				5D645C712496806700739249 /* Global.swift */,
@@ -746,6 +794,8 @@
 		5DAEE641248F993A00885FE4 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				0D803C8726FB6CE3001F9CD0 /* UpdateMailingAddressVC */,
+				0D7FC4C726E8C92B002377B4 /* OtpVerifyPopUpVC */,
 				5DA7766D259A0123006BDA69 /* LoadMoneyVC */,
 				5DEBAFF7258D03BC00264A2E /* CountryPopUpVC */,
 				5D37FBDD255D144000F95B8A /* BiometricVC */,
@@ -1110,6 +1160,7 @@
 				AA506E8A2698174700F861AA /* MobileNoCell.xib in Resources */,
 				5DAEE639248F7A3400885FE4 /* Barlow-Light.ttf in Resources */,
 				5DAEE614248F7A1900885FE4 /* Roboto-ThinItalic.ttf in Resources */,
+				0D6A8B412705C7E900FB5A14 /* AddressSetUpTableViewCell.xib in Resources */,
 				5D6D3893249A02B7009B9B3A /* SwitchButtonTableViewCell.xib in Resources */,
 				5DAEE610248F7A1800885FE4 /* Roboto-Thin.ttf in Resources */,
 				5DAEE616248F7A1900885FE4 /* Roboto-MediumItalic.ttf in Resources */,
@@ -1253,6 +1304,8 @@
 				AA7C3DA526689628008E0CE6 /* TransactionDetailsPoUPViewController.swift in Sources */,
 				5DA7766F259A019B006BDA69 /* LoadMoneyViewController copy.swift in Sources */,
 				5D41770524B4C37200B577D8 /* UpdateCardPINViewController.swift in Sources */,
+				0D6A8B432705DCD700FB5A14 /* AddressSetUpTableViewCell.swift in Sources */,
+				0D7FC4D326E8D457002377B4 /* OtpVerifyPopUpVC.swift in Sources */,
 				5D6D38772497D6E6009B9B3A /* HomeViewController.swift in Sources */,
 				5D6D387224974178009B9B3A /* CustomUserDefaults.swift in Sources */,
 				AA33A571265FC98000E10E5F /* RecentTransactionTableViewCell.swift in Sources */,
@@ -1271,6 +1324,7 @@
 				5DAEE644248F9BBD00885FE4 /* OnboardingViewController.swift in Sources */,
 				5DB231FF24A1F84C0063B1BF /* ManageMyCardViewController.swift in Sources */,
 				5D8D52AA25A83D3500F9E577 /* VirtualCardDetailsPopupViewController.swift in Sources */,
+				0D803C8926FB6F01001F9CD0 /* UpdateMailingAddressVC.swift in Sources */,
 				5DB231FD24A1F8380063B1BF /* ExchangeViewController.swift in Sources */,
 				5D2AD23024D9915300C3392E /* ProfileOptionsTableViewCell.swift in Sources */,
 				5D6D387A2498A594009B9B3A /* AccountActivationViewController.swift in Sources */,
@@ -1288,6 +1342,7 @@
 				5D068A0524ED3F3600E7E649 /* WebPageViewController.swift in Sources */,
 				5D41770024B48EB200B577D8 /* CardBlockOverLayViewController.swift in Sources */,
 				5DAEE64F248FAE6500885FE4 /* String.swift in Sources */,
+				0D6D8F10271EC4250007E184 /* main.swift in Sources */,
 				5D9E51DA24DA817600391576 /* ProfileDetailsViewController.swift in Sources */,
 				5D2AD22D24D965C200C3392E /* ProfileViewController.swift in Sources */,
 				5D4176FE24B48E9200B577D8 /* CardReplaceOverlayViewController.swift in Sources */,
@@ -1306,6 +1361,7 @@
 				5D37F75D249A0DDB00CE31BF /* ProofsTableViewCell.swift in Sources */,
 				5DF1350D2490EE04009135FE /* VerifyAccountViewController.swift in Sources */,
 				5DA49FE524E68D8D00F9D2B7 /* TransactionModel.swift in Sources */,
+				0D6D8F0E271D91A60007E184 /* TimerUIApplication.swift in Sources */,
 				5D41772524D1285000B577D8 /* ThemeManager.swift in Sources */,
 				5D645C722496806700739249 /* Global.swift in Sources */,
 				5D41770224B48EC800B577D8 /* CardDetailsOverLayViewController.swift in Sources */,

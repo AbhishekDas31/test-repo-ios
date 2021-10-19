@@ -37,7 +37,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
     var emailaddress = ""
     var username = ""
     var mobileNumber = ""
-    var isdCode = ""
+    var isdCode = "65"
     var password = ""
     var confirmPassword = ""
     let nationalityArr = ["SG","AU","DE","HK","IN","ID","JP","MY","KR","TW","TH","GB","US","VN"]
@@ -107,13 +107,37 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
     
     @IBAction func registerButtonPressed(_ sender: Any) {
         self.view.endEditing(true)
-        if ValidationHandler.validateRegisterationForm(form: self, email: self.emailaddress, password: password, confirmPassword: confirmPassword, mobileNumber: mobileNumber, username: self.emailaddress, isdcode: isdCode) {
+        if ValidationHandler.validateRegisterationForm(form: self, email: self.emailaddress.lowercased(), password: password, confirmPassword: confirmPassword, mobileNumber: mobileNumber, username: self.emailaddress.lowercased(), isdcode: isdCode) {
             Alert.showProgressHud(onView: self.view)
 //            let isdcode = isdCode.trimmingCharacters(in: .whitespaces)
-            AmplifyManager.register(username: emailaddress, walletusername: self.emailaddress, password: password, email: emailaddress, isdCode: isdCode, mobileNumber: mobileNumber, viewController: self)
+//           
+            AmplifyManager.mobileCheck(username: emailaddress.lowercased(), walletusername: self.emailaddress.lowercased(), password: password, email: emailaddress.lowercased(), isdCode: isdCode, mobileNumber: mobileNumber, viewController: self, completionHandler: { (stringResponse, error) in
+                debugPrint("stringResponse+++++++++++++++++++++",stringResponse)
+                
+                if  let user = stringResponse?["users"] as? [[String: Any]]{
+                
+                                                    if user.count == 0{
+                                                        debugPrint("HelloWorld")
+                                                       
+                                                            AmplifyManager.register(username: self.emailaddress.lowercased(), walletusername: self.emailaddress.lowercased(), password: self.password, email: self.emailaddress.lowercased(), isdCode: self.isdCode, mobileNumber: self.mobileNumber, viewController: self)
+                                                        
+                                                        
+                                                    }
+                                                    else{
+                
+                                                        debugPrint("Bye")
+                
+                                                    }
+                
+                                                }
+            })
+            
+            
+//            AmplifyManager.register(username: emailaddress.lowercased(), walletusername: self.emailaddress.lowercased(), password: password, email: emailaddress.lowercased(), isdCode: isdCode, mobileNumber: mobileNumber, viewController: self)
             //AmplifyManager.register(username: emailaddress, password: password, email: emailaddress, viewController: self)
         }
     }
+    
     
     @IBAction func countrySelectorButtonPressed(_ sender: Any) {
         let countryCodeVC = CountryPopUpViewController.storyboardInstance()

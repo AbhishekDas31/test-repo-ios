@@ -38,7 +38,7 @@ class ProfileViewController: UIViewController {
     let nationalityArr = ["SG","AU","DE","HK","IN","ID","JP","MY","KR","TW","TH","GB","US","VN"]
     let codeArr = ["SGD","AUD","EUR","HKD","INR","IDR","JPY","MYR","KRW","TWD","THB","GBP","USD","VND"]
     let countryCodeArr = ["65","61","49","852","91","62","81","60","82","886","66","44","1","84"]
-    
+    var isUpdate = false
     override func viewDidLoad() {
         super.viewDidLoad()
         configureTheme()
@@ -258,6 +258,16 @@ extension ProfileViewController{
                                 self.profileDetails.code = "\(self.codeArr[index])"
                                 self.profileDetails.countryCode = "\(self.countryCodeArr[index])"
                             }
+                        }
+                        
+                        if self.isUpdate{
+                            
+                                let profileDetailsVC = ProfileDetailsViewController.storyboardInstance()
+                                profileDetailsVC.index = 1
+                                profileDetailsVC.profileDetails = self.profileDetails
+                                self.navigationController?.pushViewController(profileDetailsVC, animated: false)
+                            
+                            
                         }
                     }
                     if CustomUserDefaults.getIsdCode() == ""{

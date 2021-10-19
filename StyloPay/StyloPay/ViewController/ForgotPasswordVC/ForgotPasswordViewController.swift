@@ -24,13 +24,27 @@ class ForgotPasswordViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var submitButton: UIButton!
     @IBOutlet weak var backButton: UIButton!
     
+    @IBOutlet var labelMsg: UILabel!
     var emailAddress = ""
+    
     let theme = ThemeManager.currentTheme()
+    var otpObservation : NSObjectProtocol?
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
+    
+        otpObservation = NotificationCenter.default.addObserver(forName: OtpVerifyPopUpVC.otpWillDismissNotification, object: nil, queue: .main) { _ in
+            self.labelMsg.isHidden=false
+        }
+        
         self.navigationController?.navigationBar.isHidden = true
+        
         configureTheme()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        NotificationCenter.default.removeObserver(self)
     }
     
     func configureTheme(){
@@ -48,7 +62,7 @@ class ForgotPasswordViewController: UIViewController, UITextFieldDelegate {
         lineSeperatorView.backgroundColor = theme.bottomUnselectedTabButtonColor
         screenTitleLabel.textColor = theme.bottomUnselectedTabButtonColor
         submitButton.setBackgroundImage(theme.buttonsBackgroundImage, for: .normal)
-        
+        labelMsg.isHidden=true
     }
     
     @IBAction func backToSignIn(_ sender: Any) {
@@ -64,6 +78,9 @@ class ForgotPasswordViewController: UIViewController, UITextFieldDelegate {
     }
     
     
+    
+
+    
     // MARK: - TextField Delegate Methods
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
@@ -75,4 +92,22 @@ class ForgotPasswordViewController: UIViewController, UITextFieldDelegate {
             emailAddress = textField.text!
         }
     }
+    
+    
 }
+
+//extension ForgotPasswordViewController: OtpDelegate {
+//    func messageDisplay(status: String) {
+//        if status == "done"{
+//            
+//            labelMsg.isHidden=false
+//            
+//        }
+//        
+////            let imageName = "\(countryFlags[row])"
+////            let countryCode = "\(countryCodeList[row])"
+////            self.countryFlagImageView.image = UIImage(named: imageName)
+////            self.countryIsdcodeLabel.text = "+ \(countryCode)"
+////            self.isdCode = "\(countryCode)"
+//    }
+//}

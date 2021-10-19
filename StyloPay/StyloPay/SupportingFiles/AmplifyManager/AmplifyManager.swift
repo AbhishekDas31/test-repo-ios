@@ -11,12 +11,111 @@ import Amplify
 import Alamofire
 import LocalAuthentication
 
+
 class AmplifyManager: NSObject {
+    
+    
+    
+    
+    class func mailVerify(email : String , viewController: UIViewController , completionHandler: @escaping (_ responseValue: Dictionary<String,Any>?, _ isError: String?) -> ()){
+        let strtUrl = "\(baseUrl)/api/v1/AuthServices/adminUpdateUserAttributes"
+        var semaphore = DispatchSemaphore (value: 0)
+        let parameters = "{\n    \n\t\"email\": \"\(email)\",\n   \"clientId\": \"37384mi68cfm440mc377b7tpii\",\n\t\"userPoolId\": \"eu-west-1_JAFQFM1IJ\",\n\t\n    \"customAttributes\": {\n         \n        \"email_verified\":\"true\"\n    }\n}"
+        
+        let postData = parameters.data(using: .utf8)
+        var request = URLRequest(url: URL(string: strtUrl )!,timeoutInterval: Double.infinity)
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpMethod = "POST"
+        request.httpBody = postData
+
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+          guard let data = data else {
+            print(String(describing: error))
+            semaphore.signal()
+            return
+          }
+            
+            do {
+                
+                if let responseJson = try JSONSerialization.jsonObject(with: data, options : .allowFragments) as? Dictionary<String,Any>
+                {
+                    debugPrint("User Attribute Response++++++++++",responseJson)
+                   completionHandler(responseJson , "")
+                  
+                    
+                    let metaData = responseJson["sdkHttpMetadata"] as? Dictionary<String,Any>
+                    debugPrint("MetaData+++++++++",metaData)
+                    let statusCode = metaData?["httpStatusCode"] as? Int
+                    debugPrint("status+++++++++",statusCode as Any)
+                    
+                    if statusCode == 200{
+                        AmplifyManager.resetPassword(username: email, viewController: viewController)
+                    }
+                    
+                }
+
+          }
+            catch _ as NSError {
+                        
+                    }
+    }
+       // task.resume()
+    
+    }
+    
+    
+    
+    
+    
+    class func mobileCheck(username: String, walletusername: String, password: String, email: String, isdCode: String, mobileNumber: String, viewController: UIViewController,completionHandler: @escaping (_ responseValue: Dictionary<String,Any>?, _ isError: String?) -> ()){
+        let strtUrl = "\(baseUrl)/api/v1/AuthServices/listUsers"
+
+        var semaphore = DispatchSemaphore (value: 0)
+        let parameters = "{\r\n    \"userPoolId\": \"eu-west-1_JAFQFM1IJ\",\r\n    \"phoneNumber\": \"+\(isdCode)\(mobileNumber)\",\r\n    \"email\": \"\",\r\n    \"paginationToken\":\"\"\r\n    \r\n}"
+        
+        let postData = parameters.data(using: .utf8)
+        debugPrint("walletParam++++++++++++++++++++++++++",parameters,strtUrl)
+        //let postData = parameters.data(using: .utf8)
+        var request = URLRequest(url: URL(string: strtUrl)!,timeoutInterval: Double.infinity)
+
+
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+
+        request.httpMethod = "POST"
+        request.httpBody = postData
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            
+          guard let data = data else {
+
+            debugPrint(String(describing: error))
+            semaphore.signal()
+            return
+        }
+            do {
+                            if let response = try JSONSerialization.jsonObject(with: data, options : .allowFragments) as? Dictionary<String,Any>
+                            {
+                                completionHandler(response , "")
+                             
+
+                            }
+
+                      }
+                catch _ as NSError {
+                            
+                        }
+
+                    }
+                    task.resume()
+       // semaphore.wait()
+                }
+
     
     class func register(username: String, walletusername: String, password: String, email: String, isdCode: String, mobileNumber: String, viewController: UIViewController) {
         //  let userAttributes = [AuthUserAttribute(.email, value: email), AuthUserAttribute(.phoneNumber, value: "+\(isdCode)\(mobileNumber)"), AuthUserAttribute(AuthUserAttributeKey(rawValue: "custom:isd_code"), value: "+\(isdCode)"), AuthUserAttribute(AuthUserAttributeKey(rawValue: "custom:walletusername"), value: "\(email)"), AuthUserAttribute(AuthUserAttributeKey(rawValue: "custom:application_name"), value: "\(Constants.kAppDisplayName)")]
-        let userAttributes = [AuthUserAttribute(.email, value: email), AuthUserAttribute(.phoneNumber, value: "+\(isdCode)\(mobileNumber)"), AuthUserAttribute(AuthUserAttributeKey(rawValue: "custom:isd_code"), value: "+\(isdCode)"), AuthUserAttribute(AuthUserAttributeKey(rawValue: "custom:application_name"), value: "\(Constants.kAppDisplayName)")]
+        let userAttributes = [AuthUserAttribute(.email, value: email), AuthUserAttribute(.phoneNumber, value: "+\(isdCode)\(mobileNumber)"), AuthUserAttribute(AuthUserAttributeKey(rawValue: "custom:isd_code"), value: "+\(isdCode)"), AuthUserAttribute(AuthUserAttributeKey(rawValue: "custom:application_name"), value: "\(Constants.kAppDisplayName)"), AuthUserAttribute(AuthUserAttributeKey(rawValue: "custom:agent_code"), value: "\(Constants.agentValue)"), AuthUserAttribute(AuthUserAttributeKey(rawValue: "custom:subagent_code"), value: "\(Constants.subAgentValue)")]
         let options = AuthSignUpRequest.Options(userAttributes: userAttributes)
+        
+        
         _ = Amplify.Auth.signUp(username: username, password: password, options: options) { result in
             switch result {
             case .success(let signUpResult):
@@ -40,6 +139,32 @@ class AmplifyManager: NSObject {
             }
         }
     }
+    
+    
+    class func confirmOtpVerification(for username: String, with confirmationCode: String, walletusername: String, viewController: UIViewController, password: String, isdCode: String, mobileNumber: String) {
+        _ = Amplify.Auth.confirmSignUp(for: username, confirmationCode: confirmationCode) { result in
+            switch result {
+            case .success(_):
+                
+            
+                    let verifyAccountVC = OtpVerifyPopUpVC.storyboardInstance()
+                  
+                    verifyAccountVC.dismiss(animated: true, completion: nil)
+                    
+                NotificationCenter.default.post(name: OtpVerifyPopUpVC.otpWillDismissNotification, object: nil)
+            case .failure(let error):
+                DispatchQueue.main.async {
+                    Alert.hideProgressHud(onView: viewController.view)
+                    Global.showAlert(withMessage: "\(error.errorDescription)", setTwoButton: false, setFirstButtonTitle: "OK", setSecondButtonTitle: "", handler: { (action) in
+                        Constants.kAppDelegate?.setControllers()
+                    })
+                }
+            }
+        }
+    }
+    
+    
+    
     
     class func confirmSignUp(for username: String, with confirmationCode: String, walletusername: String, viewController: UIViewController, password: String, isdCode: String, mobileNumber: String) {
         _ = Amplify.Auth.confirmSignUp(for: username, confirmationCode: confirmationCode) { result in
@@ -97,10 +222,18 @@ class AmplifyManager: NSObject {
                         }
                         break
                     case .confirmSignUp(_):
-                        Alert.hideProgressHud(onView: viewController.view)
+                        
+                       // AmplifyManager.resendCode(email: "adas31@yopmail.com")
+                        
+                      Alert.hideProgressHud(onView: viewController.view)
                         DispatchQueue.main.async {
                             Global.showAlert(withMessage: "Account Not verified.\n Kindly verify first to proceed", setTwoButton: false, setFirstButtonTitle: "OK", setSecondButtonTitle: "", handler: { (action) in
+                                AmplifyManager.resendCode(username : username, viewController: viewController)
+
                                 let verifyAccountVC = VerifyAccountViewController.storyboardInstance()
+
+
+                                //AmplifyManager.resendCode()
                                 verifyAccountVC.emailAddress = username
                                 verifyAccountVC.password = password
                                 viewController.navigationController?.pushViewController(verifyAccountVC, animated: true)
@@ -115,7 +248,7 @@ class AmplifyManager: NSObject {
                         break
                     case .resetPassword(_):
                         break
-                    }
+                    }//close async
                 }
             case .failure(let error):
                 DispatchQueue.main.async {
@@ -189,7 +322,7 @@ class AmplifyManager: NSObject {
     }
     
     class func fetchUserAttributes(viewcontroller: UIViewController) {
-//        Amplify.Auth.resendConfirmationCode(for: AuthUserAttributeKey.phoneNumber, listener: <#T##((AmplifyOperation<AuthAttributeResendConfirmationCodeRequest, AuthCodeDeliveryDetails, AuthError>.OperationResult) -> Void)?##((AmplifyOperation<AuthAttributeResendConfirmationCodeRequest, AuthCodeDeliveryDetails, AuthError>.OperationResult) -> Void)?##(AmplifyOperation<AuthAttributeResendConfirmationCodeRequest, AuthCodeDeliveryDetails, AuthError>.OperationResult) -> Void#>) sent otp
+        //Amplify.Auth.resendConfirmationCode(for: AuthUserAttributeKey.phoneNumber, listener: <#T##((AmplifyOperation<AuthAttributeResendConfirmationCodeRequest, AuthCodeDeliveryDetails, AuthError>.OperationResult) -> Void)?##((AmplifyOperation<AuthAttributeResendConfirmationCodeRequest, AuthCodeDeliveryDetails, AuthError>.OperationResult) -> Void)?##(AmplifyOperation<AuthAttributeResendConfirmationCodeRequest, AuthCodeDeliveryDetails, AuthError>.OperationResult) -> Void#>);
 
     //    Amplify.Auth.update(userAttributes: [AuthUserAttributeKey.custom("custom:isd_code"),""], options: <#T##AuthUpdateUserAttributesRequest.Options?#>) aws update while sync
 
@@ -203,32 +336,34 @@ class AmplifyManager: NSObject {
                 for items in session{
                     dataDictionary.updateValue(items.value, forKey: "\(items.key.rawValue)")
                 }
-                DispatchQueue.main.async {
-                    Alert.hideProgressHud(onView: viewcontroller.view)
-                    AmplifyManager.authorisedUserHandling(isdCode: dataDictionary["custom:isd_code"] as? String ?? "", mobileNumber: dataDictionary["phone_number"] as? String ?? "",phone_number_verified: dataDictionary["phone_number_verified"] as? String ?? "false")
-                    //phone_number_verified
-
-                }
-//                if let appName = dataDictionary["custom:application_name"] as? String{
-//                    if appName == Constants.kAppDisplayName || appName == "MASTER" {
+//                DispatchQueue.main.async {
+//                    Alert.hideProgressHud(onView: viewcontroller.view)
+//                    AmplifyManager.authorisedUserHandling(isdCode: dataDictionary["custom:isd_code"] as? String ?? "", mobileNumber: dataDictionary["phone_number"] as? String ?? "",phone_number_verified: dataDictionary["phone_number_verified"] as? String ?? "false")
+//                    //phone_number_verified
 //
-//                        DispatchQueue.main.async {
-//                            Alert.hideProgressHud(onView: viewcontroller.view)
-//                            AmplifyManager.authorisedUserHandling(isdCode: dataDictionary["custom:isd_code"] as? String ?? "", mobileNumber: dataDictionary["phone_number"] as? String ?? "")
-//
-//                        }
-//                    } else {
-//                        DispatchQueue.main.async {
-//                            Alert.hideProgressHud(onView: viewcontroller.view)
-//                            AmplifyManager.nonAuthorisedUserHandling(viewcontroller: viewcontroller)
-//                        }
-//                    }
-//                } else {
-//                    DispatchQueue.main.sync {
-//                        Alert.hideProgressHud(onView: viewcontroller.view)
-//                        AmplifyManager.authorisedUserHandling(isdCode: dataDictionary["custom:isd_code"] as? String ?? "", mobileNumber: dataDictionary["phone_number"] as? String ?? "")
-//                    }
 //                }
+                if let agentCode = dataDictionary["custom:agent_code"] as? String ,
+                                   let subAgentCode = dataDictionary["custom:subagent_code"] as? String {
+                                    if (agentCode == Constants.agentValue && subAgentCode == Constants.subAgentValue )  || (agentCode == "000" && subAgentCode == "0") || (agentCode == "" && subAgentCode == "") {
+
+                                        DispatchQueue.main.async {
+                                            Alert.hideProgressHud(onView: viewcontroller.view)
+                                            AmplifyManager.authorisedUserHandling(isdCode: dataDictionary["custom:isd_code"] as? String ?? "", mobileNumber: dataDictionary["phone_number"] as? String ?? "", phone_number_verified: "false")
+
+                                        }
+                                    } else {
+                                        DispatchQueue.main.async {
+                                            Alert.hideProgressHud(onView: viewcontroller.view)
+                                            AmplifyManager.nonAuthorisedUserHandling(viewcontroller: viewcontroller)
+                                        }
+                                    }
+                                }
+                else {
+                    DispatchQueue.main.sync {
+                        Alert.hideProgressHud(onView: viewcontroller.view)
+                        AmplifyManager.authorisedUserHandling(isdCode: dataDictionary["custom:isd_code"] as? String ?? "", mobileNumber: dataDictionary["phone_number"] as? String ?? "", phone_number_verified: "false")
+                    }
+                }
             case .failure( _):
                 DispatchQueue.main.async {
                     Alert.hideProgressHud(onView: viewcontroller.view)
@@ -236,6 +371,79 @@ class AmplifyManager: NSObject {
             }
         }
     }
+    
+    
+    class func resendCode1resend(username : String , viewController: UIViewController) {
+        
+        _ = Amplify.Auth.resendSignUpCode(for: username) { result in
+            switch result {
+            case .success(let deliveryDetails):
+                DispatchQueue.main.async() {
+                print("Resend code send to - \(deliveryDetails)")
+                Global.showAlert(withMessage: "Email not verfied! Click on 'OK' to verify Email", setTwoButton: false, setFirstButtonTitle: "OK", setSecondButtonTitle: "", handler: { (action) in
+                    
+                    let otpVC = OtpVerifyPopUpVC.storyboardInstance()
+                    otpVC.modalPresentationStyle = .overCurrentContext
+                   
+                    otpVC.isForgotPassword = true
+                    otpVC.emailAddress = username
+                    viewController.navigationController?.present(otpVC, animated: true)
+                    
+                    
+                })
+                }
+                
+            case .failure(let error):
+                
+               
+                debugPrint("Resend code failed with error \(error.errorDescription)")
+                
+                if error.errorDescription == "User is already confirmed."{
+                    
+                    debugPrint("HelloWorld")
+                    
+                    AmplifyManager.mailVerify(email: username , viewController: viewController, completionHandler: { (stringResponse, error) in
+                        
+                        debugPrint("stringResponse+++++++++++++++++++++",stringResponse)
+                        })
+                    
+                   
+                }
+                    
+                else{
+                    
+                    debugPrint("ByeWorld")
+                }
+                    
+                }
+                    }
+            
+       }
+    //generic
+    class func resendCode(username : String , viewController: UIViewController) {
+        
+        _ = Amplify.Auth.resendSignUpCode(for: username) { result in
+            switch result {
+            case .success(let deliveryDetails):
+                DispatchQueue.main.async() {
+                Global.showAlert(withMessage: "OTP sent in Emil", setTwoButton: false, setFirstButtonTitle: "OK", setSecondButtonTitle: "", handler: { (action) in
+                
+                print("Resend code send to - \(deliveryDetails)")
+                
+                })
+                }
+            case .failure(let error):
+                
+               
+                debugPrint("Resend code failed with error \(error.errorDescription)")
+                
+              
+                    
+                }
+                    }
+            
+       }
+    
     
     class func authenticationWithTouchID() {
         let localAuthenticationContext = LAContext()
@@ -286,6 +494,9 @@ class AmplifyManager: NSObject {
             do {
                 let resetResult = try result.get()
                 switch resetResult.nextStep {
+                
+                
+                
                 case .confirmResetPasswordWithCode( _, _):
                     DispatchQueue.main.async {
                         Alert.hideProgressHud(onView: viewController.view)
@@ -300,7 +511,12 @@ class AmplifyManager: NSObject {
             } catch {
                 DispatchQueue.main.async {
                     Alert.hideProgressHud(onView: viewController.view)
-                    Global.showAlert(withMessage: "\(error)", sender: viewController)
+                    if error is AuthError{
+                        
+                        AmplifyManager.resendCode1resend(username : username, viewController: viewController)
+                       
+                    }
+                    //Global.showAlert(withMessage: "\(error)", sender: viewController)
                 }
             }
         }
@@ -396,6 +612,7 @@ class AmplifyManager: NSObject {
 
         }
         debugPrint("walletParam++++++++++++++++++++++++++",parameters,strUrl,emailID,password,credentialData,base64Credentials)
+       // let p = parameters.da
         let postData =  parameters.data(using: .utf8)
         var request = URLRequest(url: URL(string: strUrl)!,timeoutInterval: Double.infinity)
         request.addValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")

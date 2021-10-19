@@ -77,9 +77,9 @@ class LoginViewController: UIViewController , UITextFieldDelegate{
     
     @IBAction func signInButtonPressed(_ sender: Any) {
         self.view.endEditing(true)
-        if ValidationHandler.validateSigninScreen(form: self, email: emailAddress, password: password){
+        if ValidationHandler.validateSigninScreen(form: self, email: emailAddress.lowercased(), password: password){
             Alert.showProgressHud(onView: self.view)
-            AmplifyManager.signIn(username: emailAddress, password: password, viewController: self, isNew: false, isAuthVerification: false)
+            AmplifyManager.signIn(username: emailAddress.lowercased(), password: password, viewController: self, isNew: false, isAuthVerification: false)
         }
     }
     

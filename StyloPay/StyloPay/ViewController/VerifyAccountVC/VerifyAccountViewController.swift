@@ -34,6 +34,7 @@ class VerifyAccountViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var fourthDigitTextField: UITextField!
     @IBOutlet weak var fifthDigitTextField: UITextField!
     @IBOutlet weak var sixthDigitTextField: UITextField!
+  
     
     var emailAddress = ""
     var password = ""
@@ -47,6 +48,7 @@ class VerifyAccountViewController: UIViewController, UITextFieldDelegate {
         super.viewDidLoad()
         configureView()
         configureTheme()
+        
     }
     
     func configureTheme(){
@@ -56,6 +58,25 @@ class VerifyAccountViewController: UIViewController, UITextFieldDelegate {
         screenTitleLabel.textColor = theme.bottomUnselectedTabButtonColor
         mainImageView.image = theme.buttonsBackgroundImage
         continueButton.setBackgroundImage(theme.buttonsBackgroundImage, for: .normal)
+       
+        let label = UILabel()
+        if isForgotPassword{
+        label.isHidden = true
+        }
+        else{
+        label.frame = CGRect(x: 180, y: 582, width: 200, height: 20)
+        label.textColor = UIColor.white
+        let attributedString = NSMutableAttributedString.init(string: "Resend OTP")
+        attributedString.addAttribute(NSAttributedString.Key.underlineStyle, value: 1, range:
+                    NSRange.init(location: 0, length: attributedString.length));
+                label.attributedText = attributedString
+        label.isUserInteractionEnabled = true
+        let guestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(labelClicked(_:)))
+               label.addGestureRecognizer(guestureRecognizer)
+                view.addSubview(label)
+                self.view = view
+        }
+        
     }
     
     func configureView(){
@@ -80,6 +101,8 @@ class VerifyAccountViewController: UIViewController, UITextFieldDelegate {
         sixthOtpView.layer.borderColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
         
         confirgureTextFields()
+        
+        
     }
     
     func confirgureTextFields(){
@@ -98,11 +121,18 @@ class VerifyAccountViewController: UIViewController, UITextFieldDelegate {
         sixthDigitTextField.addTarget(self, action: #selector(self.textFieldDidChange(textField:)), for: .editingChanged)
     }
     
+    @objc func labelClicked(_ sender: Any) {
+      
+        AmplifyManager.resendCode(username: emailAddress, viewController: self)
+        
+       }
+    
     @IBAction func continueButtonPressed(_ sender: Any) {
         self.view.endEditing(true)
         let otp = "\(self.firstDigitTextField.text ?? "")\(self.secondDigitTextField.text ?? "")\(self.thirdDigitTextField.text ?? "")\(self.fourthDigitTextField.text ?? "")\( self.fifthDigitTextField.text ?? "")\(self.sixthDigitTextField.text ?? "")".trimmingCharacters(in: .whitespaces)
         if ValidationHandler.validateVerifyAccount(form: self, otp: otp){
             if isForgotPassword{
+                
                 let newPasswordVC = NewPasswordViewController.storyboardInstance()
                 newPasswordVC.otp = otp
                 newPasswordVC.emailAddress = emailAddress

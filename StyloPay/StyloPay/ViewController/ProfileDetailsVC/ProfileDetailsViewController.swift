@@ -14,7 +14,7 @@ protocol ProfileDetailsDelegate : NSObjectProtocol {
     func tabUpdateButton(isSuccess: Bool)
 }
 
-class ProfileDetailsViewController: UIViewController {
+class ProfileDetailsViewController: UIViewController, ProfileAddressActionDelegate {
     
     // MARK: - StoryBoard Instance
     static func storyboardInstance() -> ProfileDetailsViewController {
@@ -39,7 +39,9 @@ class ProfileDetailsViewController: UIViewController {
     @IBOutlet weak var updateButtonView: UIView!
     @IBOutlet weak var updateViewConstraint: NSLayoutConstraint!
     @IBOutlet weak var updateButton: UIButton!
-    
+    let nationalityArr = ["SG","AU","DE","HK","IN","ID","JP","MY","KR","TW","TH","GB","US","VN"]
+    let codeArr = ["SGD","AUD","EUR","HKD","INR","IDR","JPY","MYR","KRW","TWD","THB","GBP","USD","VND"]
+    let countryCodeArr = ["65","61","49","852","91","62","81","60","82","886","66","44","1","84"]
     let theme = ThemeManager.currentTheme()
     var index = 0
     weak var delegate: ProfileDetailsDelegate!
@@ -47,14 +49,19 @@ class ProfileDetailsViewController: UIViewController {
     var isCorrespondence = false
     var isMailing = false
     var isBilling = false
-    let complianceStatus = CustomUserDefaults.getComplianceStatus()
+    var complianceStatus = CustomUserDefaults.getComplianceStatus()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        //if isMailing {
+           // postUpdateMailingAddress()
+      //  }else{
         configureCell()
         moreOptionsButton.isHidden = true
         configureTheme()
         configureTitle()
+            getCustomerInfo()
+        //}
     }
     
     func configureTitle(){
@@ -68,6 +75,7 @@ class ProfileDetailsViewController: UIViewController {
                 updateButtonView.isHidden = false
             } else {
                 updateButtonView.isHidden = true
+                debugPrint("hello")
             }
             
             updateViewConstraint.constant = 60.0
@@ -151,7 +159,7 @@ class ProfileDetailsViewController: UIViewController {
     
 }
 
-extension ProfileDetailsViewController: UITableViewDelegate, UITableViewDataSource, ProfileAddressActionDelegate{
+extension ProfileDetailsViewController: UITableViewDelegate, UITableViewDataSource{
    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if index == 1{
@@ -182,50 +190,42 @@ extension ProfileDetailsViewController: UITableViewDelegate, UITableViewDataSour
 
         }
             else if index == 1{
+                
             if let addressDetailsCell =  tableView.dequeueReusableCell(withIdentifier: "AddressDetailsTableViewCell", for: indexPath) as? AddressDetailsTableViewCell{
                 if self.complianceStatus == ComplianceStatusType.ACTION_REQUIRED.rawValue || self.complianceStatus == ComplianceStatusType.IN_PROGRESS.rawValue {
                     addressDetailsCell.configureMyProfileTextFields(row: indexPath.row, data: self.profileDetails, isTextfieldEditable: true)
+                    
                 } else {
                     addressDetailsCell.configureMyProfileTextFields(row: indexPath.row, data: self.profileDetails, isTextfieldEditable: false)
                 }
                 
-                addressDetailsCell.configureView(isCorrespondence: self.isCorrespondence, isMailing: self.isMailing, isBilling: self.isBilling, row: indexPath.row)
-                addressDetailsCell.landmarkTextField.delegate = self
+//            addressDetailsCell.configureView(isCorrespondence: self.isCorrespondence, isMailing: self.isMailing, isBilling: self.isBilling, row: indexPath.row)
+            //    addressDetailsCell.landmarkTextField.delegate = self
                 addressDetailsCell.delegate = self
-                addressDetailsCell.firstAddressLineTextField.delegate = self
-                addressDetailsCell.secondAddressLineTextField.delegate = self
-                addressDetailsCell.cityTextField.delegate = self
-                addressDetailsCell.statesTextField.delegate = self
-                addressDetailsCell.zipcodeTextField.delegate = self
+               
+                    
+                    
+                   
+                
+//                addressDetailsCell.firstAddressLineTextField.delegate = self
+//                addressDetailsCell.secondAddressLineTextField.delegate = self
+//                addressDetailsCell.cityTextField.delegate = self
+//                addressDetailsCell.statesTextField.delegate = self
+//                addressDetailsCell.zipcodeTextField.delegate = self
                 return addressDetailsCell
             }
         }
         return UITableViewCell()
     }
     
-    func tabDropdownButton(cell: AddressDetailsTableViewCell) {
-        guard let index = self.profileDetailsTableView.indexPath(for: cell) else { return }
-        switch index.row {
-        case 0:
-            self.isCorrespondence = !self.isCorrespondence
-            self.isBilling = false
-            self.isMailing = false
-            break
-        case 1:
-            self.isCorrespondence = false
-            self.isBilling = !self.isBilling
-            self.isMailing = false
-            break
-        case 2:
-            self.isCorrespondence = false
-            self.isBilling = false
-            self.isMailing = !self.isMailing
-            break
-        default:
-            break
+   
+    
+    func updateBtn(isSuccess: Bool) {
+        if isSuccess{
+            let updateMail = UpdateMailingAddressVC.storyboardInstance()
+           updateMail.configureTextField(data: self.profileDetails, isTextfieldEditable: true)
+            self.navigationController?.pushViewController(updateMail, animated: true)
         }
-        self.profileDetailsTableView.reloadData()
-        self.profileDetailsTableView.scrollToRow(at: index, at: .top, animated: false)
     }
 }
 
@@ -362,6 +362,123 @@ extension ProfileDetailsViewController {
                 }
             }
         })
+    }
+    
+    func getCustomerInfo(){
+        let customerHashId = CustomUserDefaults.getCustomerHashId()
+        let url = "\(mainUrl)/api/v1/getCustomer/\(customerHashId)"
+        Alert.showProgressHud(onView: self.view)
+        WebServices.getRequest(urlString: url, isAuth: true, isWalletUser: true, xAPIKey: liveWalletXAPIKey) { (responseObject, responseArray, error)  in
+            Alert.hideProgressHud(onView: self.view)
+            if error == nil {
+                if let response = responseObject as? [String : Any]{
+                    debugPrint("response:  \(response)")
+                    if let error =  responseObject?["error"] as? String {
+                        if error == "invalid_token"{
+                            AmplifyManager.getWalletAccessToken{(isSuccess, error) in
+                                debugPrint(isSuccess ?? false)
+                            }
+                        }
+                    }else{
+                        if let error =  responseObject?["message"] as? String {
+                            Global.showAlert(withMessage: "\(error)", sender: self)
+                        }
+                    }
+                    if let complianceStatus = response["complianceStatus"] as? String{
+                        CustomUserDefaults.setComplianceStatus(data: complianceStatus)
+                        self.complianceStatus = complianceStatus
+                        let profiledata = PersonalnfoModel(response)
+                        self.profileDetails = profiledata
+                        for index in 0..<self.nationalityArr.count{
+                            if self.nationalityArr[index] == "\(self.profileDetails.nationality)" {
+                                self.profileDetails.code = "\(self.codeArr[index])"
+                                self.profileDetails.countryCode = "\(self.countryCodeArr[index])"
+                            }
+                        }
+                        
+//                        if self.isMailing{
+//                            
+//                            self.index = 1
+//                        }
+                    }
+                    if CustomUserDefaults.getIsdCode() == ""{
+                        if let isoCode = response["countryCode"] as? String
+                        {
+                            let index = isoCode2.indexes(of: isoCode)
+                            if index.count == 1 {
+                                self.awsUpdateSync(isdCode: "\(countryCodeList[index[0]])", mobileNumber: response["mobile"] as? String ?? "")
+                                
+                            }
+                        }
+                    }
+                } else {
+                    if let error =  responseObject?["error"] as? String {
+                        if error == "invalid_token"{
+                            AmplifyManager.getWalletAccessToken{(isSuccess, error) in
+                                debugPrint(isSuccess ?? false)
+                            }
+                        }
+                    }else{
+                        if let error =  responseObject?["message"] as? String {
+                            Global.showAlert(withMessage: "\(error)", sender: self)
+                        }
+                    }
+                }
+            } else {
+                let strError : String =  (error?.localizedDescription)!
+                debugPrint(strError)
+            }
+        }
+    }
+    
+    
+    func awsUpdateSync(isdCode:String,mobileNumber:String){
+        Alert.showProgressHud(onView: self.view)
+        Amplify.Auth.update(userAttributes: [AuthUserAttribute(.phoneNumber, value: "+\(isdCode)\(mobileNumber)"),AuthUserAttribute(AuthUserAttributeKey(rawValue: "custom:isd_code"), value: "+\(isdCode)"),], options: .none) { result in
+            switch result {
+            case .success:
+                self.fetchUserAttributes()
+            case .failure(let error):
+                DispatchQueue.main.async {
+                    Alert.hideProgressHud(onView: self.view)
+                    Global.showAlert(withMessage: "\(error.errorDescription)", sender: self)
+                }
+            }
+        }
+    }
+    
+    
+    func fetchUserAttributes() {
+        _ = Amplify.Auth.fetchUserAttributes { result in
+            switch result {
+            case .success(let session):
+                var dataDictionary: [String: Any] = [:]
+                for items in session{
+                    dataDictionary.updateValue(items.value, forKey: "\(items.key.rawValue)")
+                }
+                DispatchQueue.main.async {
+                    Alert.hideProgressHud(onView: self.view)
+                    self.authoriseHandling(isdCode: dataDictionary["custom:isd_code"] as? String ?? "", mobileNumber: dataDictionary["phone_number"] as? String ?? "",phone_number_verified: dataDictionary["phone_number_verified"] as? String ?? "false")
+                    //phone_number_verified
+
+                }
+
+            case .failure( _):
+                DispatchQueue.main.async {
+                    Alert.hideProgressHud(onView: self.view)
+                }
+            }
+        }
+    }
+    
+    func authoriseHandling(isdCode: String, mobileNumber: String , phone_number_verified:String)
+    {
+        let isdCodeLength = isdCode.length
+        let isdCodeValue = String(isdCode.dropFirst())
+        let phoneNumber = String(mobileNumber.dropFirst(isdCodeLength))
+        CustomUserDefaults.setMobileNumber(data: phoneNumber)
+        CustomUserDefaults.setPhoneNumberVerified(data:phone_number_verified != "false")
+        CustomUserDefaults.setIsdCode(data: isdCodeValue)
     }
     
     func getWalletAccessToken(){

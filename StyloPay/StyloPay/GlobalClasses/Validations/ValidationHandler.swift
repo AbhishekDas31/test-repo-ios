@@ -314,6 +314,25 @@ class ValidationHandler: NSObject {
             }
         }
     
+    
+    class func validateOtpPopUpScreen(from object: OtpVerifyPopUpVC , otp: String)-> Bool {
+        
+        if Validation.isBlank(otp){
+            Global.showAlert(withMessage: ValidationError.OfType.empty.description, sender: object)
+            return false
+        }
+        
+        else {
+            return true
+        }
+        
+      
+    }
+    
+    
+    
+    
+    
     class func validateAddonDetaildPopupScreen(form object: VirtualCardDetailsPopupViewController,firstName: String, lastName: String, emailId: String, mobileNumber: String) -> Bool{
         if Validation.isBlank(firstName){
             Global.showAlert(withMessage: ValidationError.OfType.emptyFirstname.description, sender: object)

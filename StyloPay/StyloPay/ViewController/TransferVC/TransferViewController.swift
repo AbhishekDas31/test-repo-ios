@@ -37,7 +37,7 @@ class TransferViewController: UIViewController,UITextFieldDelegate {
     
     
     let theme = ThemeManager.currentTheme()
-    var walletBalanceArray = [WalletBalanceModel]()
+    var walletBalanceArray = [WalletBalanceModel]()   //.......copy to home view control
     let emailAddress = CustomUserDefaults.getEmailID()
     var password = ""//CustomUserDefaults.getPassword()
     var wallebalance = ""

@@ -98,6 +98,7 @@ class RecentTransactionsViewController: UIViewController, MFMailComposeViewContr
         getWalletBalance()
     }
 
+    
     func configureCell() {
      //   recentTransactionTableView.estimatedRowHeight = 60
         recentTransactionTableView.separatorStyle = .none
@@ -189,20 +190,20 @@ class RecentTransactionsViewController: UIViewController, MFMailComposeViewContr
 
     @IBAction func mailPDFButtonPressed(_ sender: Any) {
         if self.arrRecentTransaction.count != 0{
-            sendEmail()
+            sendEmail(recipient: "shashicrj91@yopmail.com", text: "Hi..Have a great day!")
         }
     }
 
-    func sendEmail() {
-        let emailId = CustomUserDefaults.getEmailID()
-        let pdfData = self.recentTransactionTableView.exportAsPdfFromTable() as Data
+    func sendEmail(recipient : String , text : String) {
+       // let emailId = CustomUserDefaults.getEmailID()
+        //let pdfData = self.recentTransactionTableView.exportAsPdfFromTable() as Data
         if MFMailComposeViewController.canSendMail() {
             let mail = MFMailComposeViewController()
             mail.mailComposeDelegate = self
-            mail.setToRecipients(["\(emailId)"])
-            mail.addAttachmentData(pdfData, mimeType: "application/pdf", fileName: "Report.pdf")
-            mail.setMessageBody("Report", isHTML: true)
-            present(mail, animated: true)
+            mail.setToRecipients([recipient])
+            //mail.addAttachmentData(pdfData, mimeType: "application/pdf", fileName: "Report.pdf")
+            mail.setMessageBody(text , isHTML: false)
+            present(mail, animated: true ,completion: nil )
         } else {
             showErrorMessage()
         }
@@ -216,7 +217,7 @@ class RecentTransactionsViewController: UIViewController, MFMailComposeViewContr
     }
 
     func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
-        controller.dismiss(animated: true)
+        controller.dismiss(animated: true , completion: nil)
     }
 
 

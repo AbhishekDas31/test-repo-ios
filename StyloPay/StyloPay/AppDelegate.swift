@@ -14,7 +14,7 @@ import AmplifyPlugins
 import MFSideMenu
 import LocalAuthentication
 
-@UIApplicationMain
+//@UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?

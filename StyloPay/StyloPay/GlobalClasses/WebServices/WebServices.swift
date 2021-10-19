@@ -74,6 +74,37 @@ class WebServices: NSObject {
         }
     }
 
+    
+    
+    class func postMobileRequest(urlString: String, paramDict:[String:Any],isWalletUser: Bool, isAuth: Bool,
+                           completionHandler:@escaping (NSDictionary?,[[String: Any]]?, NSError?) -> ()) {
+        
+        var dicParam = [String: Any]()
+        for (key, value) in paramDict {
+            if value is String {
+                dicParam [key] = (value as AnyObject).trimmingCharacters(in: .whitespacesAndNewlines)
+            } else {
+                dicParam [key] = value
+            }
+        }
+        AF.request(urlString, method: .post, parameters: dicParam).responseString { (response:AFDataResponse<String>) in
+            switch response.result {
+            case let .success(value):
+                if let JSON = value as? [String: Any] {
+                    completionHandler(JSON as NSDictionary?, nil, nil)
+                }
+                if let arrayJSON = value as? [[String: Any]] {
+                    completionHandler(nil,arrayJSON as [[String: Any]], nil)
+                }
+
+                case .failure(let error):
+
+                 completionHandler(nil, nil, error as NSError?)
+            }
+        }
+    }
+
+    
     class func postRequestnexom(urlString: String, paramDict:[String:Any],isWalletUser: Bool, isAuth: Bool,xAPIKey: String,
                            completionHandler:@escaping (NSDictionary?, String?, NSError?) -> ()) {
 
